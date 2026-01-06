@@ -10,6 +10,7 @@ bash_kernel
 
 # Web Framework
 fastapi
+starlette
 
 
 # ASGI Server (with standard extras like websockets, httptools)

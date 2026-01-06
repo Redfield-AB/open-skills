@@ -10,13 +10,13 @@ def resolve_with_system_dns(hostname):
         print(f"Error resolving {hostname}: {e}")
         return None
 
-hostname = "open-skills.local"
-address = resolve_with_system_dns(hostname)
+#hostname = "open-skills.local"
+#address = resolve_with_system_dns(hostname)
 # Create a proxy directly from a config dictionary
 config = {
     "mcpServers": {
         "default": {  # For single server configs, 'default' is commonly used
-            "url": f"http://{address}:8222/mcp",
+            "url": f"http://open-skills:8222/mcp",
             "transport": "http"
         }
     }

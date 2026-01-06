@@ -19,6 +19,7 @@ import websockets
 import httpx
 # Import Context for progress reporting
 from mcp.server.fastmcp import FastMCP, Context
+from mcp.server.transport_security import TransportSecuritySettings
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 import socket
@@ -29,7 +30,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Initialize the MCP server with a descriptive name for the toolset
-mcp = FastMCP("Open-Skills")
+allowed_hosts_raw = os.getenv("FASTMCP_ALLOWED_HOSTS", "localhost").split(",")
+allowed_hosts = [x + ":*" for x in allowed_hosts_raw]
+allowed_origins = ["http://" + x + ":*" for x in allowed_hosts_raw]
+
+mcp = FastMCP(
+    "Open-Skills",
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=allowed_hosts,
+        allowed_origins=allowed_origins,
+    )
+)
 
 # Kernel pool configuration
 MAX_KERNELS = 5
